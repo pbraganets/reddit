@@ -1,0 +1,30 @@
+### Headers settings
+company: Pavlo B
+
+### Xcode project settings
+project_name: Reddit
+xcodeproj_path: Reddit.xcodeproj
+
+### Code generation settings section
+# The main project target name
+project_target: Reddit
+
+# The file path for new modules
+project_file_path: Reddit/Sources/Modules
+
+# The Xcode group path to new modules
+project_group_path: Reddit/Sources/Modules
+
+### Tests generation settings section
+# The tests target name
+test_target: RedditTests
+
+# The file path for new tests
+test_file_path: RedditTests/Modules
+
+# The Xcode group path to new tests
+test_group_path: RedditTests/Modules
+
+### Templates
+templates:
+- {name: viper_swift}

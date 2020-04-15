@@ -1,0 +1,11 @@
+{% include 'header' %}
+
+class {{ module_info.name }}Presenter: {{ module_info.name }}ModuleInput, {{ module_info.name }}ViewOutput, {{ module_info.name }}InteractorOutput {
+
+    // MARK: - Public properties
+
+    weak var view: {{ module_info.name }}ViewInput!
+    var interactor: {{ module_info.name }}InteractorInput!
+    var wireframe: {{ module_info.name }}WireframeInput!
+
+}

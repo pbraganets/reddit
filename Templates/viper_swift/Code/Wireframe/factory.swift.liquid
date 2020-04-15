@@ -1,0 +1,15 @@
+{% include 'header' %}
+
+protocol {{ module_info.name }}FactoryProtocol {
+    func create{{ module_info.name }}View(_ wireframeInput: {{ module_info.name }}WireframeInput) -> {{ module_info.name }}ViewController
+}
+
+class {{ module_info.name }}Factory: {{ module_info.name }}FactoryProtocol {
+    
+    func create{{ module_info.name }}View(_ wireframeInput: {{ module_info.name }}WireframeInput) -> {{ module_info.name }}ViewController {
+        let viewController = {{ module_info.name }}ViewController()
+        {{ module_info.name }}Assembly.assemble(viewController, wireframeInput: wireframeInput)
+        return viewController
+    }
+
+}

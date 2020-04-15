@@ -1,0 +1,11 @@
+{% include 'header' %}
+
+import UIKit
+
+class {{ module_info.name }}ViewController: UIViewController, {{module_info.name}}ViewInput {
+
+    // MARK: - Public properties
+
+    var output: {{ module_info.name }}ViewOutput!
+
+}

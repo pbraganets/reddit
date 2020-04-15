@@ -1,0 +1,15 @@
+{% include 'header' %}
+
+class {{ module_info.name }}Assembly {
+    static func assemble(_ viewController: {{ module_info.name }}ViewController, wireframeInput: {{ module_info.name }}WireframeInput) {
+        let presenter = {{ module_info.name }}Presenter()
+        presenter.view = viewController
+        presenter.wireframe = wireframeInput
+
+        let interactor = {{ module_info.name }}Interactor()
+        interactor.output = presenter
+
+        presenter.interactor = interactor
+        viewController.output = presenter
+    }
+}
