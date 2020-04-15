@@ -23,8 +23,9 @@ class MainCoordinator: BaseCoordinator, Coordinatable {
     // MARK: - Coordinatable
 
     func start() {
-        let controller = UIViewController()
-        controller.view.backgroundColor = UIColor.lightGray
-        router.setRoot(controller, animated: false)
+        let redditListCoordinator = RedditListCoordinator(with: router)
+        addDependency(redditListCoordinator)
+        redditListCoordinator.start()
+        router.setRoot(redditListCoordinator, animated: false)
     }
 }
