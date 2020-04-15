@@ -10,6 +10,12 @@
 		EB9F1F922447AE12000669C6 /* RedditTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9F1F912447AE12000669C6 /* RedditTests.swift */; };
 		EB9F1FA12447AFEF000669C6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9F1F9E2447AFEF000669C6 /* AppDelegate.swift */; };
 		EB9F1FA22447AFEF000669C6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9F1F9F2447AFEF000669C6 /* SceneDelegate.swift */; };
+		EB9F1FAA2447B29D000669C6 /* Routable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9F1FA42447B29D000669C6 /* Routable.swift */; };
+		EB9F1FAB2447B29D000669C6 /* Presentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9F1FA52447B29D000669C6 /* Presentable.swift */; };
+		EB9F1FAC2447B29D000669C6 /* Coordinatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9F1FA62447B29D000669C6 /* Coordinatable.swift */; };
+		EB9F1FAD2447B29D000669C6 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9F1FA72447B29D000669C6 /* Router.swift */; };
+		EB9F1FAE2447B29D000669C6 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9F1FA82447B29D000669C6 /* MainCoordinator.swift */; };
+		EB9F1FAF2447B29D000669C6 /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9F1FA92447B29D000669C6 /* BaseCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,6 +36,12 @@
 		EB9F1F932447AE12000669C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EB9F1F9E2447AFEF000669C6 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EB9F1F9F2447AFEF000669C6 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		EB9F1FA42447B29D000669C6 /* Routable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Routable.swift; sourceTree = "<group>"; };
+		EB9F1FA52447B29D000669C6 /* Presentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Presentable.swift; sourceTree = "<group>"; };
+		EB9F1FA62447B29D000669C6 /* Coordinatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinatable.swift; sourceTree = "<group>"; };
+		EB9F1FA72447B29D000669C6 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		EB9F1FA82447B29D000669C6 /* MainCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		EB9F1FA92447B29D000669C6 /* BaseCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +101,7 @@
 		EB9F1F9C2447AFEF000669C6 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				EB9F1FA32447B29D000669C6 /* Coordinator */,
 				EB9F1F9D2447AFEF000669C6 /* Misc */,
 			);
 			path = Sources;
@@ -101,6 +114,19 @@
 				EB9F1F9F2447AFEF000669C6 /* SceneDelegate.swift */,
 			);
 			path = Misc;
+			sourceTree = "<group>";
+		};
+		EB9F1FA32447B29D000669C6 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				EB9F1FA42447B29D000669C6 /* Routable.swift */,
+				EB9F1FA52447B29D000669C6 /* Presentable.swift */,
+				EB9F1FA62447B29D000669C6 /* Coordinatable.swift */,
+				EB9F1FA72447B29D000669C6 /* Router.swift */,
+				EB9F1FA82447B29D000669C6 /* MainCoordinator.swift */,
+				EB9F1FA92447B29D000669C6 /* BaseCoordinator.swift */,
+			);
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -202,7 +228,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB9F1FA12447AFEF000669C6 /* AppDelegate.swift in Sources */,
+				EB9F1FAE2447B29D000669C6 /* MainCoordinator.swift in Sources */,
+				EB9F1FAB2447B29D000669C6 /* Presentable.swift in Sources */,
+				EB9F1FAC2447B29D000669C6 /* Coordinatable.swift in Sources */,
+				EB9F1FAA2447B29D000669C6 /* Routable.swift in Sources */,
+				EB9F1FAD2447B29D000669C6 /* Router.swift in Sources */,
 				EB9F1FA22447AFEF000669C6 /* SceneDelegate.swift in Sources */,
+				EB9F1FAF2447B29D000669C6 /* BaseCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
