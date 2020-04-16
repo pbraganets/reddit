@@ -13,7 +13,7 @@ struct Post: Codable {
     let title: String
     let author: String
     let date: Date
-    let thumbnailUrl: String?
+    let thumbnailUrl: URL?
     let comments: Int
 
     enum CodingKeys: String, CodingKey {
