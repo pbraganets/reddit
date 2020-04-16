@@ -9,6 +9,7 @@
 import UIKit
 
 struct RedditPostConfigurationModel {
+    let id: String
     let title: String
     let author: String
     let date: Date
@@ -37,6 +38,14 @@ final class RedditPostLayoutConfiguration: RedditViewLayout {
         return label
     }()
     
+    @UsesAutoLayout private var commentsLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 1
+        label.font = UIFont.systemFont(ofSize: 15.0, weight: .ultraLight)
+        label.textColor = .white
+        return label
+    }()
+    
     @UsesAutoLayout private var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -46,7 +55,8 @@ final class RedditPostLayoutConfiguration: RedditViewLayout {
     
     @UsesAutoLayout private var titleLabel: UILabel = {
         let label = UILabel()
-        label.numberOfLines = 1
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
         label.font = UIFont.systemFont(ofSize: 15.0, weight: .bold)
         label.textColor = .white
         return label
@@ -66,6 +76,7 @@ final class RedditPostLayoutConfiguration: RedditViewLayout {
     
     init() {
         backgroundView.addSubview(authorLabel)
+        backgroundView.addSubview(commentsLabel)
         backgroundView.addSubview(imageView)
         backgroundView.addSubview(titleLabel)
         backgroundView.addSubview(dateLabel)
@@ -85,12 +96,20 @@ final class RedditPostLayoutConfiguration: RedditViewLayout {
         ]
         layoutConstraints += backgroundViewConstraints
         
+        commentsLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         let authorLabelConstraints = [
             authorLabel.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: 16.0),
             authorLabel.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 16.0),
-            authorLabel.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -16.0)
+            authorLabel.trailingAnchor.constraint(equalTo: commentsLabel.leadingAnchor, constant: -16.0)
         ]
         layoutConstraints += authorLabelConstraints
+        
+        commentsLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        let commentsLabelConstraints = [
+            commentsLabel.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: 16.0),
+            commentsLabel.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -16.0)
+        ]
+        layoutConstraints += commentsLabelConstraints
         
         let imageViewConstraints = [
             imageView.topAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: 14.0),
@@ -100,16 +119,22 @@ final class RedditPostLayoutConfiguration: RedditViewLayout {
         ]
         layoutConstraints += imageViewConstraints
         
+        let titleToDateAlighment = titleLabel.bottomAnchor.constraint(equalTo: dateLabel.topAnchor, constant: -10.0)
+        titleToDateAlighment.priority = .init(100)
         let titleLabelConstraints = [
             titleLabel.topAnchor.constraint(equalTo: imageView.topAnchor, constant: 2.0),
             titleLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 12.0),
+            titleToDateAlighment,
             titleLabel.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -16.0)
         ]
         layoutConstraints += titleLabelConstraints
         
+        let dateToImageAlighmentConstraint = dateLabel.bottomAnchor.constraint(greaterThanOrEqualTo: imageView.bottomAnchor, constant: -2.0)
+        dateToImageAlighmentConstraint.priority = .init(300)
         let dateLabelConstraints = [
             dateLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 12.0),
-            dateLabel.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -2.0),
+            dateLabel.bottomAnchor.constraint(lessThanOrEqualTo: backgroundView.bottomAnchor, constant: -16.0),
+            dateToImageAlighmentConstraint,
             dateLabel.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -16.0)
         ]
         layoutConstraints += dateLabelConstraints
@@ -118,8 +143,9 @@ final class RedditPostLayoutConfiguration: RedditViewLayout {
     }
     
     func update(with model: RedditPostConfigurationModel) {
-        titleLabel.text = model.title
         authorLabel.text = model.author
+        commentsLabel.text = String(model.comments)
+        titleLabel.text = model.title
         dateLabel.text = model.date.description
         if let imageUrl = model.thumbnailUrl {
             imageView.setImage(with: imageUrl, placeholder: nil)

@@ -15,9 +15,7 @@ class RedditListViewController: UIViewController, RedditListViewInput {
 
     var output: RedditListViewOutput!
     
-    private var disposables = Set<AnyCancellable>()
-    private var cancellable: AnyCancellable?
-    @Published private(set) var posts: [Post] = [] {
+    private var posts: [RedditPostConfigurationModel] = [] {
         didSet {
             self.tableView.reloadData()
             self.refreshControl.endRefreshing()
@@ -61,14 +59,19 @@ class RedditListViewController: UIViewController, RedditListViewInput {
         super.viewDidLoad()
         
         setupUI()
-        
-        fetch()
+        output.viewDidLoad(self)
+    }
+    
+    // MARK: - RedditListViewInput
+    
+    func update(with posts: [RedditPostConfigurationModel]) {
+        self.posts = posts
     }
     
     // MARK: - Private implementation
     
     private func setupUI() {
-        view.backgroundColor = .magenta
+        view.backgroundColor = .black
         navigationController?.navigationBar.barTintColor = .black
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: RedditListViewController.tintColor]
@@ -119,6 +122,9 @@ class RedditListViewController: UIViewController, RedditListViewInput {
         tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(fetch), for: .valueChanged)
         
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = CGFloat(RedditPostLayoutConfiguration.defaultHeight)
+        
         tableView.dataSource = self
         tableView.delegate = self
     }
@@ -143,39 +149,20 @@ class RedditListViewController: UIViewController, RedditListViewInput {
 
         redditPostCell.configuration.update(with: configurationModel)
         redditPostCell.selectionStyle = .none
+        redditPostCell.backgroundColor = .black
         return redditPostCell
     }
     
     @objc private func fetch() {
-        RedditFetcher().posts(after: nil, limit: 10)
-        .receive(on: DispatchQueue.main)
-        .sink(receiveCompletion: { [weak self] completion in
-            guard let self = self else {
-                return
-            }
-            switch completion {
-            case .failure:
-                self.posts = []
-            case .finished:
-                break
-            }
-            },
-            receiveValue: { [weak self] response in
-                guard let self = self else {
-                    return
-                }
-                self.posts = response.posts
-            }
-        )
-        .store(in: &disposables)
+        output.viewWillRefresh(self)
     }
 }
     
 // MARK: - UITableViewDelegate
 
 extension RedditListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return CGFloat(RedditPostLayoutConfiguration.defaultHeight)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
     }
     
 }
@@ -189,12 +176,7 @@ extension RedditListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let post = posts[indexPath.row]
-        let redditPostConfigurationModel = RedditPostConfigurationModel(title: post.title,
-                                                                        author: post.author,
-                                                                        date: post.date,
-                                                                        thumbnailUrl: post.thumbnailUrl,
-                                                                        comments: post.comments)
+        let redditPostConfigurationModel = posts[indexPath.row]
         return redditPostCell(for: tableView, configurationModel: redditPostConfigurationModel) ?? UITableViewCell()
     }
 

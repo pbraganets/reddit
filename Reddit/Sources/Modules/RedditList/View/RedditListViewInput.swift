@@ -7,4 +7,5 @@
 //
 
 protocol RedditListViewInput: class {
+    func update(with posts: [RedditPostConfigurationModel])
 }

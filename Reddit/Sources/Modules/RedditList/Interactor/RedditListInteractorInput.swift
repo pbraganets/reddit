@@ -9,4 +9,5 @@
 import Foundation
 
 protocol RedditListInteractorInput {
+    func fetchPosts(_ invalidate: Bool, completionHandler: ((Result<[Post], Swift.Error>) -> Void)?)
 }
