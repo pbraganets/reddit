@@ -49,6 +49,7 @@ extension RedditListCoordinator: Coordinatable {
     private func startRedditDetailsModule(with postId: String) {
         let redditDetailsCoordinator = RedditDetailsCoordinator(with: router)
         redditDetailsCoordinator.start()
+        redditDetailsCoordinator.moduleInput?.postId = postId
         addDependency(redditDetailsCoordinator)
         router.push(redditDetailsCoordinator, animated: true) {
             self.removeDependency(redditDetailsCoordinator)

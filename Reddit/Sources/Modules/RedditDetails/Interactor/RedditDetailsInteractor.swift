@@ -11,5 +11,11 @@ class RedditDetailsInteractor: RedditDetailsInteractorInput {
     // MARK: - Public properties
 
     weak var output: RedditDetailsInteractorOutput!
+    
+    // MARK: - RedditDetailsInteractorInput
+    
+    func fetchPost(with id: String) -> Post? {
+        return RedditPostsService.shared.post(for: id)
+    }
 
 }

@@ -9,4 +9,5 @@
 import Foundation
 
 protocol RedditDetailsInteractorInput {
+    func fetchPost(with id: String) -> Post?
 }

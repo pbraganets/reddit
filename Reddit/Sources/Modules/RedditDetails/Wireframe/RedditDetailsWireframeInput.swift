@@ -9,4 +9,5 @@
 import Foundation
 
 protocol RedditDetailsWireframeInput {
+    func updateModuleInput(moduleInput: RedditDetailsModuleInput)
 }

@@ -9,6 +9,10 @@
 import UIKit
 
 class RedditDetailsCoordinator: BaseCoordinator, RedditDetailsWireframeInput {
+    
+    // MARK: - Pubic properties
+    
+    weak var moduleInput: RedditDetailsModuleInput?
 
     // MARK: - Private properties
 
@@ -24,6 +28,12 @@ class RedditDetailsCoordinator: BaseCoordinator, RedditDetailsWireframeInput {
         if let factory = factory {
             self.factory = factory
         }
+    }
+    
+    // MARK: - RedditDetailsWireframeInput
+    
+    func updateModuleInput(moduleInput: RedditDetailsModuleInput) {
+        self.moduleInput = moduleInput
     }
 
 }

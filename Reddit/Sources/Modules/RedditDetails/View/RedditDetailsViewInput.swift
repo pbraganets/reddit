@@ -7,4 +7,5 @@
 //
 
 protocol RedditDetailsViewInput: class {
+    func update(with post: RedditPostConfigurationModel)
 }

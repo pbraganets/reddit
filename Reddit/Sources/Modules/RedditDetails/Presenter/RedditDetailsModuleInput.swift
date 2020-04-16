@@ -6,5 +6,6 @@
 //  Copyright © 2020 Pavlo B. All rights reserved.
 //
 
-protocol RedditDetailsModuleInput {
+protocol RedditDetailsModuleInput: class {
+    var postId: String? { get set }
 }
