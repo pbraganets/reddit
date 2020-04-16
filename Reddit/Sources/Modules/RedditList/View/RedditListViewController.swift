@@ -162,7 +162,7 @@ class RedditListViewController: UIViewController, RedditListViewInput {
 
 extension RedditListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        output.postDidSelect(self, postId: posts[indexPath.row].id)
     }
     
 }

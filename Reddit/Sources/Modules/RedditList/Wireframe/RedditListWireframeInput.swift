@@ -9,4 +9,5 @@
 import Foundation
 
 protocol RedditListWireframeInput {
+    func performDisplayDetails(postId: String)
 }

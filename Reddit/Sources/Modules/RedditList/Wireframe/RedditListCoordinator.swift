@@ -25,6 +25,12 @@ class RedditListCoordinator: BaseCoordinator, RedditListWireframeInput {
             self.factory = factory
         }
     }
+    
+    // MARK: - RedditListWireframeInput
+    
+    func performDisplayDetails(postId: String) {
+        startRedditDetailsModule(with: postId)
+    }
 
 }
 
@@ -38,6 +44,15 @@ extension RedditListCoordinator: Coordinatable {
     private func startRedditListModule() {
         temporaryPresentable = factory.createRedditListView(self)
         presentable = temporaryPresentable
+    }
+    
+    private func startRedditDetailsModule(with postId: String) {
+        let redditDetailsCoordinator = RedditDetailsCoordinator(with: router)
+        redditDetailsCoordinator.start()
+        addDependency(redditDetailsCoordinator)
+        router.push(redditDetailsCoordinator, animated: true) {
+            self.removeDependency(redditDetailsCoordinator)
+        }
     }
 
 }

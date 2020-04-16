@@ -9,4 +9,5 @@
 protocol RedditListViewOutput {
     func viewDidLoad(_ view: RedditListViewInput)
     func viewWillRefresh(_ view: RedditListViewInput)
+    func postDidSelect(_ view: RedditListViewInput, postId: String)
 }

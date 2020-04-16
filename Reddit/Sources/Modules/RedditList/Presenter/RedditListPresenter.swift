@@ -24,6 +24,10 @@ class RedditListPresenter: RedditListModuleInput, RedditListViewOutput, RedditLi
         fetchPosts(true)
     }
     
+    func postDidSelect(_ view: RedditListViewInput, postId: String) {
+        wireframe.performDisplayDetails(postId: postId)
+    }
+    
     // MARK: - Private implementation
     
     private func fetchPosts(_ invalidate: Bool) {
