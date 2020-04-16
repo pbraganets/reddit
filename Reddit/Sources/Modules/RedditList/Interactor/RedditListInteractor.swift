@@ -24,5 +24,9 @@ class RedditListInteractor: RedditListInteractorInput {
     func fetchPosts(_ invalidate: Bool, completionHandler: ((Result<[Post], Swift.Error>) -> Void)? = nil) {
         RedditPostsService.shared.fetchPosts(invalidate, fetchLimit: fetchLimit, completionHandler: completionHandler)
     }
+    
+    func invalidatePosts(completionHandler: ((Result<[Post], Swift.Error>) -> Void)?) {
+        RedditPostsService.shared.invalidatePosts(completionHandler: completionHandler)
+    }
 
 }

@@ -68,6 +68,11 @@ final class RedditPostsService {
         .store(in: &disposables)
     }
     
+    func invalidatePosts(completionHandler: ((Result<[Post], Swift.Error>) -> Void)?) {
+        self.invalidate()
+        completionHandler?(.success([]))
+    }
+    
     func post(for id: String) -> Post? {
         return posts.first { $0.id == id }
     }

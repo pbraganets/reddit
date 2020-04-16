@@ -28,18 +28,44 @@ class RedditListPresenter: RedditListModuleInput, RedditListViewOutput, RedditLi
         fetchPosts(false)
     }
     
+    func viewWillInvalidate(_ view: RedditListViewInput) {
+        invalidatePosts()
+    }
+    
     func postDidSelect(_ view: RedditListViewInput, postId: String) {
         wireframe.performDisplayDetails(postId: postId)
     }
     
     func shouldLoadMorePosts(_ view: RedditListViewInput) -> Bool {
-        return true
+        return true // TODO: should be retrieved form Interactor
     }
     
     // MARK: - Private implementation
     
     private func fetchPosts(_ invalidate: Bool) {
         interactor.fetchPosts(invalidate) { [weak self] result in
+            guard let self = self else {
+                return
+            }
+            
+            switch result {
+            case .success(let posts):
+                self.view.update(with: posts.map({ (post) -> RedditPostConfigurationModel in
+                    return RedditPostConfigurationModel(id: post.id,
+                                                        title: post.title,
+                                                        author: post.author,
+                                                        date: post.date,
+                                                        thumbnailUrl: post.thumbnailUrl,
+                                                        comments: post.comments)
+                }))
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    private func invalidatePosts() {
+        interactor.invalidatePosts { [weak self] result in
             guard let self = self else {
                 return
             }

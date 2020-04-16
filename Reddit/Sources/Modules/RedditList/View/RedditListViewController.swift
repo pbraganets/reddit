@@ -134,7 +134,7 @@ class RedditListViewController: UIViewController, RedditListViewInput {
     }
     
     @objc private func dismissAll(_ sender: UIButton) {
-        
+        output.viewWillInvalidate(self)
     }
     
     private func redditPostCell(for tableView: UITableView,
