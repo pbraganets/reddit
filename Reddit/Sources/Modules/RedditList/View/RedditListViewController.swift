@@ -165,6 +165,29 @@ extension RedditListViewController: UITableViewDelegate {
         output.postDidSelect(self, postId: posts[indexPath.row].id)
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == posts.count - 1 && output.shouldLoadMorePosts(self) {
+            let spinner = UIActivityIndicatorView(style: .medium)
+            spinner.frame = CGRect(x: 0.0,
+                                   y: 0.0,
+                                   width: tableView.bounds.width,
+                                   height: 44.0)
+            spinner.startAnimating()
+            tableView.tableFooterView = spinner
+            tableView.tableFooterView?.isHidden = false
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.output.viewWillLoadMorePosts(self)
+            }
+        } else {
+            tableView.tableFooterView?.removeFromSuperview()
+            let view = UIView()
+            view.frame = CGRect(x: 0.0, y: 0.0, width: tableView.bounds.width, height: 5.0)
+            tableView.tableFooterView = view
+            tableView.tableFooterView?.isHidden = true
+        }
+    }
+    
 }
 
 // MARK: - UITableViewDataSource

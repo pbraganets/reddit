@@ -77,8 +77,8 @@ private extension RedditFetcher {
         components.host = RedditApi.host
         components.path = RedditApi.path
         components.query = "t=all&limit=\(limit)"
-        if let after = after {
-            components.query = components.path + "&after=\(after)"
+        if let after = after, let query = components.query {
+            components.query = query + "&after=\(after)"
         }
         
         return components

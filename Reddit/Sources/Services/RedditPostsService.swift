@@ -21,21 +21,34 @@ final class RedditPostsService {
     private var cancellable: AnyCancellable?
     private var posts: [Post] = []
     
+    private var after: String?
+    private var isFetching = false
+    private (set) var hasMoreData = true
+    
+    // MARK: - Lifecycle
+    
     private init() { }
     
     // MARK: - Public implementation
     
     func fetchPosts(_ invalidate: Bool, fetchLimit: Int, completionHandler: ((Result<[Post], Swift.Error>) -> Void)? = nil) {
         if invalidate {
-            posts.removeAll()
+            self.invalidate()
         }
         
-        RedditFetcher().posts(after: nil, limit: fetchLimit)
+        guard !isFetching && hasMoreData else {
+            return
+        }
+        
+        isFetching = true
+        
+        RedditFetcher().posts(after: after, limit: fetchLimit)
         .receive(on: DispatchQueue.main)
         .sink(receiveCompletion: { [weak self] completion in
-            guard self != nil else {
+            guard let self = self else {
                 return
             }
+            self.isFetching = false
             switch completion {
             case .failure(let error):
                 completionHandler?(.failure(error))
@@ -47,7 +60,9 @@ final class RedditPostsService {
                 guard let self = self else {
                     return
                 }
-                self.appendPosts(response.posts, completionHandler: completionHandler)
+                
+                self.isFetching = false
+                self.appendPosts(from: response, completionHandler: completionHandler)
             }
         )
         .store(in: &disposables)
@@ -59,9 +74,16 @@ final class RedditPostsService {
     
     // MARK: - Private implementation
     
-    private func appendPosts(_ posts: [Post], completionHandler: ((Result<[Post], Swift.Error>) -> Void)? = nil) {
-        self.posts.append(contentsOf: posts)
+    private func appendPosts(from response: RedditResponse, completionHandler: ((Result<[Post], Swift.Error>) -> Void)? = nil) {
+        after = response.after
+        posts.append(contentsOf: response.posts)
         completionHandler?(.success(self.posts))
+    }
+    
+    private func invalidate() {
+        isFetching = false
+        after = nil
+        posts.removeAll()
     }
     
 }

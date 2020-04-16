@@ -24,8 +24,16 @@ class RedditListPresenter: RedditListModuleInput, RedditListViewOutput, RedditLi
         fetchPosts(true)
     }
     
+    func viewWillLoadMorePosts(_ view: RedditListViewInput) {
+        fetchPosts(false)
+    }
+    
     func postDidSelect(_ view: RedditListViewInput, postId: String) {
         wireframe.performDisplayDetails(postId: postId)
+    }
+    
+    func shouldLoadMorePosts(_ view: RedditListViewInput) -> Bool {
+        return true
     }
     
     // MARK: - Private implementation
