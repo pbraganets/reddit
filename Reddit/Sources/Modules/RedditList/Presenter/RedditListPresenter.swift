@@ -33,6 +33,8 @@ class RedditListPresenter: RedditListModuleInput, RedditListViewOutput, RedditLi
     }
     
     func postDidSelect(_ view: RedditListViewInput, postId: String) {
+        // TODO: post should be marked as read via Interactor
+        
         wireframe.performDisplayDetails(postId: postId)
     }
     

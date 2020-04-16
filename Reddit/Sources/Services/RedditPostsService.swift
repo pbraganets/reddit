@@ -13,7 +13,7 @@ final class RedditPostsService {
     
     // MARK: - Public properties
     
-    static let shared = RedditPostsService()
+    static let shared = RedditPostsService() // TODO: it should not be a Singleton; due to lack of persistence store it is the way to go (unfortunatelly)
     
     // MARK: - Private properties
     

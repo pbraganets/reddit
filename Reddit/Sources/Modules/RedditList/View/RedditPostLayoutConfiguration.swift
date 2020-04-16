@@ -70,6 +70,8 @@ final class RedditPostLayoutConfiguration: RedditViewLayout {
         return label
     }()
     
+    // TOOD: read status should be supported
+    
     private var layoutConstraints = [NSLayoutConstraint]()
     
     // MARK: - RedditViewLayout
@@ -77,7 +79,7 @@ final class RedditPostLayoutConfiguration: RedditViewLayout {
     init() {
         backgroundView.addSubview(authorLabel)
         backgroundView.addSubview(commentsLabel)
-        backgroundView.addSubview(imageView)
+        backgroundView.addSubview(imageView) // TODO: tap gesture recognizer and event handling for image view
         backgroundView.addSubview(titleLabel)
         backgroundView.addSubview(dateLabel)
     }
@@ -146,7 +148,7 @@ final class RedditPostLayoutConfiguration: RedditViewLayout {
         authorLabel.text = model.author
         commentsLabel.text = String(model.comments)
         titleLabel.text = model.title
-        dateLabel.text = model.date.description
+        dateLabel.text = model.date.description // TODO: should be formatted properly
         if let imageUrl = model.thumbnailUrl {
             imageView.setImage(with: imageUrl, placeholder: nil)
         } else {

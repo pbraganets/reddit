@@ -15,6 +15,7 @@ struct Post: Codable {
     let date: Date
     let thumbnailUrl: URL?
     let comments: Int
+    // TOOD: read status should be supported
 
     enum CodingKeys: String, CodingKey {
         case id

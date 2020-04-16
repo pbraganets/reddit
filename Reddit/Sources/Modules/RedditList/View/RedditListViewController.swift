@@ -17,6 +17,8 @@ class RedditListViewController: UIViewController, RedditListViewInput {
     
     private var posts: [RedditPostConfigurationModel] = [] {
         didSet {
+            // TODO: diff should be calculated and table view updated animated
+
             self.tableView.reloadData()
             self.refreshControl.endRefreshing()
         }
@@ -185,6 +187,13 @@ extension RedditListViewController: UITableViewDelegate {
             view.frame = CGRect(x: 0.0, y: 0.0, width: tableView.bounds.width, height: 5.0)
             tableView.tableFooterView = view
             tableView.tableFooterView?.isHidden = true
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            // TODO: should be passed throw Presenter -> Interactor flow
+            posts.remove(at: indexPath.row)
         }
     }
     
